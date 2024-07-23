@@ -3,6 +3,8 @@ const list = document.getElementById("list");
 let addElement = document.getElementById("addElement");
 let cajaTexto = document.getElementById("text");
 
+
+
 let contador = 1;
 
 addElement.addEventListener("click",function () {
@@ -29,29 +31,33 @@ addElement.addEventListener("click",function () {
     listItem.appendChild(editarBtn);
     
     list.appendChild(listItem);
-    readButtons();
-    
 
+    readButtons();
+    eliminarTarea();
+    editarTarea();
     
 });
 
 function readButtons(){
 
-    editarArr = document.getElementsByClassName("eliminar");
+    editarArr = document.getElementsByClassName("editar");
 
     eliminarArr = document.getElementsByClassName("eliminar");
-
-    for (let i = 0; i < eliminarArr.length; i++) {
-    eliminarArr[i].onclick = function () {
-        if(list.hasChildNodes()){
-            list.removeChild(list.children[i]);
-            readButtons();    
-        }
-
-    }
-
-
 }
 
 
+function eliminarTarea(){
+    for (let i = 0; i < eliminarArr.length; i++) {
+        eliminarArr[i].onclick = () => list.hasChildNodes() ?  list.removeChild(list.children[i]) : console.log("Error"); 
+        }
+}
+
+function editarTarea(){
+    for (let i = 0; i < editarArr.length; i++) {
+         editarArr[i].onclick = function (){
+            let contenido = list.children[i].querySelectorAll("p")[0].textContent;
+
+            list.children[i].querySelectorAll("p")[0].innerHTML = prompt("Edite Su Tarea", contenido);
+         }
+    }
 }
